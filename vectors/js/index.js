@@ -17,6 +17,7 @@ var bcrypt = require('bcryptjs')
 var Base64 = require('js-base64').Base64
 
 const FB_REDIRECT_URI = 'https://api.turbo360.co/vectors/social-auth-bcmu9s/token'
+const INSTAGRAM_REDIRECT_URI = 'https://api.turbo360.co/vectors/social-auth-bcmu9s/token'
 
 const validateParams = (req) => {
 	const network = req.query.network
@@ -46,6 +47,43 @@ module.exports = {
 
 
 		const network = req.query.network
+		if (network == 'instagram'){
+			const turboClient = turbo({site_id: req.query.site})
+			turboClient.site() // fetch site details of current app
+			.then(data => {
+				const instagramOauth = data.oauth.instagram
+				if (instagramOauth == null){
+					throw new Error('Missing Instagram App Credentials')
+					return
+				}
+
+				utils.PassportUtils.configureInstagramStrategy(passport, {
+					// redirect_uri: process.env.BASE_URL+'/auth/instagram/'+site.id, // callback should come from project/app
+					// client_id: instagramOauth.client_id,
+					// client_secret: instagramOauth.client_secret
+
+					client_id: instagramOauth.client_id,
+					client_secret: instagramOauth.client_secret,
+					redirect_uri: INSTAGRAM_REDIRECT_URI + '?site=' + req.query.site + '&network=' + req.query.network // callback should come from project/app
+				})
+
+				var permissions = ['basic', 'public_content', 'follower_list', 'comments']
+				passport.authenticate('instagram', {scope: permissions})(req, res, null)
+				return
+			})
+			.catch(err => {
+				res.json({
+					confirmation: 'fail',
+					message: err.message
+				})
+
+				return
+			})
+
+			return
+		}
+
+
 		if (network == 'facebook'){
 			const turboClient = turbo({site_id: req.query.site})
 			turboClient.site() // fetch site details of current app
@@ -125,6 +163,65 @@ module.exports = {
 		}
 
 		const network = req.query.network
+		if (network == 'instagram'){
+			const turboClient = turbo({site_id: req.query.site})
+			turboClient.site() // fetch site details of current app
+			.then(data => {
+				const instagramOauth = data.oauth.instagram
+				if (instagramOauth == null){
+					throw new Error('Missing Instagram App Credentials')
+					return
+				}
+
+				utils.PassportUtils.configureInstagramStrategy(passport, {
+					// redirect_uri: process.env.BASE_URL+'/auth/instagram/'+site.id, // callback should come from project/app
+					// client_id: instagramOauth.client_id,
+					// client_secret: instagramOauth.client_secret
+
+					client_id: instagramOauth.client_id,
+					client_secret: instagramOauth.client_secret,
+					redirect_uri: INSTAGRAM_REDIRECT_URI + '?site=' + req.query.site + '&network=' + req.query.network // callback should come from project/app
+				})
+
+				var permissions = ['basic', 'public_content', 'follower_list', 'comments']
+				passport.authenticate('instagram', (err, payload, info) => {
+					if (err) {
+						res.json({
+							confirmation: 'fail',
+							message: err.message
+						})
+						return
+					}
+
+					if (payload.user == null) { 
+						res.json({
+							confirmation: 'fail',
+							message: JSON.stringify(info)
+						})
+
+						return
+					}
+
+					const user = payload.user
+					const accessToken = payload.accessToken
+
+					res.redirect(instagramOauth.redirect_uri + '?payload=' + Base64.encode(JSON.stringify(payload)))
+				})(req, res, null)
+
+				return
+			})
+			.catch(err => {
+				res.json({
+					confirmation: 'fail',
+					message: err.message
+				})
+
+				return
+			})
+			return
+		}
+
+
 		if (network == 'facebook'){
 			const turboClient = turbo({site_id: req.query.site})
 			turboClient.site() // fetch site details of current app
