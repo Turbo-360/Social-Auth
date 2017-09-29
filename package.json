@@ -1,0 +1,50 @@
+{
+  "name": "social-auth",
+  "version": "0.0.0",
+  "server": false,
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "build": "npm run clean && gulp prod",
+    "postinstall": "npm run build"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.5.0",
+    "js-base64": "^2.3.2",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-instagram": "^1.0.0",
+    "passport-local": "^1.0.0",
+    "passport-oauth2": "^1.4.0",
+    "turbo360": "^1.4.43"
+  },
+  "devDependencies": {
+    "express": "latest",
+    "gulp": "latest",
+    "gulp-autoprefixer": "latest",
+    "gulp-concat": "latest",
+    "gulp-less": "latest",
+    "gulp-minify-css": "latest",
+    "gulp-sourcemaps": "latest",
+    "gulp-rename": "latest",
+    "gulp-uglify": "latest",
+    "nodemon": "latest"
+  },
+  "functions": {
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "passport-instagram": "^1.0.0",
+    "passport-oauth2": "^1.4.0",
+    "passport-facebook": "^2.1.1",
+    "bcryptjs": "^2.4.3",
+    "bluebird": "^3.5.0",
+    "js-base64": "^2.3.2",
+    "turbo360": "^1.4.43"
+  },
+  "deploy": [
+    "index.html",
+    "dist"
+  ],
+  "app": "59cce006f90cf90012899f58"
+}
