@@ -57,11 +57,37 @@ module.exports = {
 					return
 				}
 
-				utils.PassportUtils.configureInstagramStrategy(passport, {
-					// redirect_uri: process.env.BASE_URL+'/auth/instagram/'+site.id, // callback should come from project/app
-					// client_id: instagramOauth.client_id,
-					// client_secret: instagramOauth.client_secret
+				if (instagramOauth.client_id == null){
+					throw new Error('Missing Instagram Client ID')
+					return
+				}
 
+				if (instagramOauth.client_id.length == 0){
+					throw new Error('Missing Instagram Client ID')
+					return
+				}
+
+				if (instagramOauth.client_secret == null){
+					throw new Error('Missing Instagram Client Secret')
+					return
+				}
+
+				if (instagramOauth.client_secret.length == 0){
+					throw new Error('Missing Instagram Client Secret')
+					return
+				}
+
+				if (instagramOauth.redirect_uri == null){
+					throw new Error('Missing Instagram Redirect URI')
+					return
+				}
+
+				if (instagramOauth.redirect_uri.length == 0){
+					throw new Error('Missing Instagram Redirect URI')
+					return
+				}				
+
+				utils.PassportUtils.configureInstagramStrategy(passport, {
 					client_id: instagramOauth.client_id,
 					client_secret: instagramOauth.client_secret,
 					redirect_uri: INSTAGRAM_REDIRECT_URI + '?site=' + req.query.site + '&network=' + req.query.network // callback should come from project/app
@@ -173,11 +199,37 @@ module.exports = {
 					return
 				}
 
-				utils.PassportUtils.configureInstagramStrategy(passport, {
-					// redirect_uri: process.env.BASE_URL+'/auth/instagram/'+site.id, // callback should come from project/app
-					// client_id: instagramOauth.client_id,
-					// client_secret: instagramOauth.client_secret
+				if (instagramOauth.client_id == null){
+					throw new Error('Missing Instagram Client ID')
+					return
+				}
 
+				if (instagramOauth.client_id.length == 0){
+					throw new Error('Missing Instagram Client ID')
+					return
+				}
+
+				if (instagramOauth.client_secret == null){
+					throw new Error('Missing Instagram Client Secret')
+					return
+				}
+
+				if (instagramOauth.client_secret.length == 0){
+					throw new Error('Missing Instagram Client Secret')
+					return
+				}
+
+				if (instagramOauth.redirect_uri == null){
+					throw new Error('Missing Instagram Redirect URI')
+					return
+				}
+
+				if (instagramOauth.redirect_uri.length == 0){
+					throw new Error('Missing Instagram Redirect URI')
+					return
+				}
+
+				utils.PassportUtils.configureInstagramStrategy(passport, {
 					client_id: instagramOauth.client_id,
 					client_secret: instagramOauth.client_secret,
 					redirect_uri: INSTAGRAM_REDIRECT_URI + '?site=' + req.query.site + '&network=' + req.query.network // callback should come from project/app
