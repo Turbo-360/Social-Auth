@@ -1,3 +1,4 @@
 /node_modules/
 /dist/
 DOCUMENTATION.md
+.DS_Store
