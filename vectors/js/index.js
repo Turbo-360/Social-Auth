@@ -16,15 +16,7 @@ var utils = require('./utils')
 var bcrypt = require('bcryptjs')
 var Base64 = require('js-base64').Base64
 
-// temporary, test purposes:
-const FB_CLIENT_ID = '1612971992258567'
-const FB_CLIENT_SECRET = '57986223638a5fe49835062977ef69ab'
-// const FB_REDIRECT_URI = 'http://localhost:3000/vectors/token'
-
-// const FB_REDIRECT_URI = 'https://api.turbo360.co/vectors/social-auth-bcmu9s/token'
 const FB_REDIRECT_URI = 'https://api.turbo360.co/vectors/social-auth-bcmu9s/token'
-
-// 'https://api.turbo360.co/vectors/social-auth-bcmu9s/token?site=59c97a6099ee46001251c4ef'
 
 const validateParams = (req) => {
 	const network = req.query.network
@@ -170,8 +162,8 @@ module.exports = {
 
 				utils.PassportUtils.configureFacebookStrategy(passport, {
 					redirect_uri: FB_REDIRECT_URI + '?site=' + req.query.site + '&network=' + req.query.network, // callback should come from project/app
-					client_id: FB_CLIENT_ID,
-					client_secret: FB_CLIENT_SECRET
+					client_id: facebookOauth.client_id,
+					client_secret: facebookOauth.client_secret
 				})
 
 				passport.authenticate('facebook', (err, payload, info) => {
