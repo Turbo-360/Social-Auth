@@ -16,8 +16,11 @@ var utils = require('./utils')
 var bcrypt = require('bcryptjs')
 var Base64 = require('js-base64').Base64
 
-const FB_REDIRECT_URI = 'https://api.turbo360.co/vectors/social-auth-bcmu9s/token'
-const INSTAGRAM_REDIRECT_URI = 'https://api.turbo360.co/vectors/social-auth-bcmu9s/token'
+// const FB_REDIRECT_URI = 'https://api.turbo360.co/vectors/social-auth-bcmu9s/token'
+// const INSTAGRAM_REDIRECT_URI = 'https://api.turbo360.co/vectors/social-auth-bcmu9s/token'
+
+const FB_REDIRECT_URI = 		'https://production.turbo360-vector.com/social-auth-bcmu9s/token'
+const INSTAGRAM_REDIRECT_URI = 	'https://production.turbo360-vector.com/social-auth-bcmu9s/token'
 
 const validateParams = (req) => {
 	const network = req.query.network
