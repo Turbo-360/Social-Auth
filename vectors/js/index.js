@@ -37,6 +37,51 @@ const validateParams = (req) => {
 
 module.exports = {
 
+	authUrl: (req, res) => {
+		const network = req.query.network
+		if (network == null){
+			res.json({
+				confirmation: 'fail',
+				message: 'Missing network parameter'
+			})
+
+			return
+		}
+
+		const site = req.query.site
+		if (site == null){
+			res.json({
+				confirmation: 'fail',
+				message: 'Missing site parameter'
+			})
+
+
+			return
+		}
+
+		let url = null
+		if (network == 'facebook')
+			url = FB_REDIRECT_URI + '?site=' + site + '&network=' + network
+
+		if (network == 'instagram')
+			url = INSTAGRAM_REDIRECT_URI + '?site=' + site + '&network=' + network
+
+		if (url == null){
+			res.json({
+				confirmation: 'fail',
+				message: 'Invalid Network: ' + network
+			})
+			return
+		}
+
+		res.json({
+			confirmation: 'success',
+			url: url
+		})
+
+		return
+	},
+
 	authenticate: (req, res) => {
 		const missingParam = validateParams(req)
 		if (missingParam != null){
@@ -310,7 +355,7 @@ module.exports = {
 				if (facebookOauth.redirect_uri.length == 0){
 					throw new Error('Missing Facebook Redirect URI')
 					return
-				}				
+				}
 
 				utils.PassportUtils.configureFacebookStrategy(passport, {
 					redirect_uri: FB_REDIRECT_URI + '?site=' + req.query.site + '&network=' + req.query.network, // callback should come from project/app
